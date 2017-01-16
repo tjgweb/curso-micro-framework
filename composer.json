@@ -1,0 +1,18 @@
+{
+  "name": "tjg/microframework",
+  "Description": "Micro Framewrok MVC",
+  "license": "MIT",
+  "type": "project",
+  "authors": [
+    {"name": "Talles Gazel", "email": "tjgazel@gmail.com"}
+  ],
+  "autoload":{
+    "psr-4":{
+      "App\\": "app/",
+      "Core\\": "core"
+    }
+  },
+  "require":{
+    "php": ">=5.4"
+  }
+}
