@@ -1,0 +1,5 @@
+@import "bootstrap.min.css";
+
+/* custom style */
+.row-bottom{margin-bottom: 20px;}
+.navbar-default,.navbar-inverse{border-radius: 0;}
