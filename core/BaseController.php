@@ -19,27 +19,27 @@ abstract class BaseController
     {
         $this->viewPath = $viewPath;
         $this->layoutPath = $layoutPath;
-        if($layoutPath){
+        if ($layoutPath) {
             $this->layout();
-        }else{
+        } else {
             $this->content();
         }
     }
 
     protected function content()
     {
-        if(file_exists(__DIR__ . "/../app/Views/{$this->viewPath}.phtml")){
+        if (file_exists(__DIR__ . "/../app/Views/{$this->viewPath}.phtml")) {
             require_once __DIR__ . "/../app/Views/{$this->viewPath}.phtml";
-        }else{
+        } else {
             echo "Error: View path not found!";
         }
     }
 
     protected function layout()
     {
-        if(file_exists(__DIR__ . "/../app/Views/{$this->layoutPath}.phtml")){
+        if (file_exists(__DIR__ . "/../app/Views/{$this->layoutPath}.phtml")) {
             require_once __DIR__ . "/../app/Views/{$this->layoutPath}.phtml";
-        }else{
+        } else {
             echo "Error: Layout path not found!";
         }
     }
@@ -51,9 +51,9 @@ abstract class BaseController
 
     protected function getPageTitle($separator = null)
     {
-        if($separator){
+        if ($separator) {
             echo $this->pageTitle . " " . $separator . " ";
-        }else{
+        } else {
             echo $this->pageTitle;
         }
     }
