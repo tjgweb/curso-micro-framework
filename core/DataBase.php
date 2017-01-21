@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gazel
- * Date: 20/01/17
- * Time: 23:38
- */
 
 namespace Core;
 
