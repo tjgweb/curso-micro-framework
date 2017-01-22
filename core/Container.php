@@ -11,7 +11,11 @@ class Container
         return new $objContoller;
     }
 
-
+    public static function getModel($model)
+    {
+        $objModel = "\\App\\Models\\" . $model;
+        return new $objModel(DataBase::getDatabase());
+    }
 
     public static function pageNotFound()
     {

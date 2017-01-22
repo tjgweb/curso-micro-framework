@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <h1 class="h1">
+            <?php $this->getPageTitle(); ?>
+        </h1>
+    </div>
+
+    <?php foreach ($this->view->posts as $post): ?>
+    <div class="row">
+        <h3 class="h3"><?php echo $post->title; ?></h3>
+        <p class="text-justify"><?php echo $post->content; ?></p>
+        <hr/>
+    </div>
+    <?php endforeach; ?>
+</div>
