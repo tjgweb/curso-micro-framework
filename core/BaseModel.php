@@ -35,5 +35,37 @@ abstract class BaseModel
         return $result;
     }
 
+    public function create(array $data)
+    {
+        $data = $this->prepareDataInsert($data);
+        $query = "INSERT INTO {$this->table} ({$data[0]}) VALUES ({$data[1]})";
+        $stmt = $this->pdo->prepare($query);
+        for($i = 0; $i < count($data[2]); $i++){
+            $stmt->bindValue("{$data[2][$i]}", $data[3][$i]);
+        }
+        $result = $stmt->execute();
+        $stmt->closeCursor();
+        return $result;
+    }
+
+    private function prepareDataInsert(array $data)
+    {
+        $strKeys = "";
+        $strBinds = "";
+        $binds = [];
+        $values = [];
+
+        foreach ($data as $key => $value){
+            $strKeys = "{$strKeys},{$key}";
+            $strBinds = "{$strBinds},:{$key}";
+            $binds[] = ":{$key}";
+            $values[] = $value;
+        }
+        $strKeys = substr($strKeys, 1);
+        $strBinds = substr($strBinds, 1);
+
+        return [$strKeys, $strBinds, $binds, $values];
+    }
+
 
 }

@@ -1,6 +1,9 @@
 <div class="container">
     <h1 class="h1">
         <?php $this->getPageTitle(); ?>
+        <a href="/post/create" class="btn btn-primary pull-right">
+            <i class="glyphicon glyphicon-plus-sign"></i> New post
+        </a>
     </h1>
 
     <?php foreach ($this->view->posts as $post): ?>
