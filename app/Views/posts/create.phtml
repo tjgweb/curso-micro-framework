@@ -1,0 +1,18 @@
+<div class="container">
+
+    <h1 class="h1"><?php echo $this->getPageTitle() ?></h1>
+
+    <form action="/post/store" method="post" accept-charset="utf-8">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="title">Content</label>
+            <textarea name="content" class="form-control" rows="15"></textarea>
+        </div>
+        <a href="/posts" class="btn btn-default">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+</div>

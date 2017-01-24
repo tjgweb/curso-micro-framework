@@ -15,11 +15,11 @@ class PostsController extends BaseController
         $this->renderView('posts/index', 'layout');
     }
 
-    public function show($id, $request){
-        echo $id . '<br>';
-        echo $request->get->nome . '<br>';
-        echo $request->get->sexo . '<br>';
-
+    public function show($id){
+        $model = Container::getModel("Post");
+        $this->view->post = $model->find($id);
+        $this->setPageTitle("{$this->view->post->title}");
+        $this->renderView('posts/show', 'layout');
     }
 
 }
