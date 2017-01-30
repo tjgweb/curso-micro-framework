@@ -15,6 +15,9 @@
             <a href="/post/<?php echo $post->id ?>/edit" class="btn btn-warning btn-xs">
                 <i class="glyphicon glyphicon-pencil"></i>
             </a>
+            <a href="/post/<?php echo $post->id ?>/delete" class="btn btn-danger btn-xs" onclick="return confirm('Deletar este post?')">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
         </p>
         <hr/>
     <?php endforeach; ?>
