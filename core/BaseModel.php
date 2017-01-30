@@ -67,5 +67,34 @@ abstract class BaseModel
         return [$strKeys, $strBinds, $binds, $values];
     }
 
+    public function update(array $data, $id)
+    {
+        $data = $this->prepareDataUpdate($data);
+        $query = "UPDATE {$this->table} SET {$data[0]}  WHERE id=:id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(":id", $id);
+        for($i = 0; $i < count($data[1]); $i++){
+            $stmt->bindValue("{$data[1][$i]}", $data[2][$i]);
+        }
+        $result = $stmt->execute();
+        $stmt->closeCursor();
+        return $result;
+    }
+
+    private function prepareDataUpdate(array $data)
+    {
+        $strKeysBinds = "";
+        $binds = [];
+        $values = [];
+
+        foreach ($data as $key => $value){
+            $strKeysBinds = "{$strKeysBinds},{$key}=:{$key}";
+            $binds[] = ":{$key}";
+            $values[] = $value;
+        }
+        $strKeysBinds = substr($strKeysBinds, 1);
+
+        return [$strKeysBinds, $binds, $values];
+    }
 
 }

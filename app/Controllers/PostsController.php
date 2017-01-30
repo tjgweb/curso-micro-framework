@@ -17,13 +17,15 @@ class PostsController extends BaseController
         $this->post = Container::getModel("Post");
     }
 
-    public function index(){
+    public function index()
+    {
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->All();
         $this->renderView('posts/index', 'layout');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $this->view->post = $this->post->find($id);
         $this->setPageTitle("{$this->view->post->title}");
         $this->renderView('posts/show', 'layout');
@@ -46,6 +48,27 @@ class PostsController extends BaseController
             Redirect::route('/posts');
         }else{
             echo "Erro ao inserir no banco de dados";
+        }
+    }
+
+    public function edit($id)
+    {
+        $this->view->post = $this->post->find($id);
+        $this->setPageTitle('Edit post - ' . $this->view->post->title);
+        $this->renderView('posts/edit', 'layout');
+    }
+
+    public function update($id, $request)
+    {
+        $data = [
+            'title' => $request->post->title,
+            'content' => $request->post->content
+        ];
+
+        if($this->post->update($data, $id)){
+            Redirect::route('/posts');
+        }else{
+            echo "Erro ao atualizar!";
         }
     }
 

@@ -11,6 +11,11 @@
             <a href="/post/<?php echo $post->id; ?>/show"><?php echo $post->title; ?></a>
         </h3>
         <p class="text-justify"><?php echo $post->content; ?></p>
+        <p class="text-right">
+            <a href="/post/<?php echo $post->id ?>/edit" class="btn btn-warning btn-xs">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+        </p>
         <hr/>
     <?php endforeach; ?>
 </div>
