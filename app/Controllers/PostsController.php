@@ -6,6 +6,7 @@ namespace App\Controllers;
 use Core\BaseController;
 use Core\Container;
 use Core\Redirect;
+use Core\Session;
 
 class PostsController extends BaseController
 {
@@ -19,22 +20,30 @@ class PostsController extends BaseController
 
     public function index()
     {
+        if(Session::get('success')){
+            $this->view->success = Session::get('success');
+            Session::destroy('success');
+        }
+        if(Session::get('errors')){
+            $this->view->errors = Session::get('errors');
+            Session::destroy('errors');
+        }
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->All();
-        $this->renderView('posts/index', 'layout');
+        return $this->renderView('posts/index', 'layout');
     }
 
     public function show($id)
     {
         $this->view->post = $this->post->find($id);
         $this->setPageTitle("{$this->view->post->title}");
-        $this->renderView('posts/show', 'layout');
+        return $this->renderView('posts/show', 'layout');
     }
 
     public function create()
     {
         $this->setPageTitle('New post');
-        $this->renderView('posts/create', 'layout');
+        return $this->renderView('posts/create', 'layout');
     }
 
     public function store($request)
@@ -45,9 +54,11 @@ class PostsController extends BaseController
         ];
 
         if($this->post->create($data)){
-            Redirect::route('/posts');
+            return Redirect::route('/posts');
         }else{
-            echo "Erro ao inserir no banco de dados";
+            return Redirect::route('/posts', [
+                'errors' => ['Erro ao inserir no banco de dados!']
+            ]);
         }
     }
 
@@ -55,7 +66,7 @@ class PostsController extends BaseController
     {
         $this->view->post = $this->post->find($id);
         $this->setPageTitle('Edit post - ' . $this->view->post->title);
-        $this->renderView('posts/edit', 'layout');
+        return $this->renderView('posts/edit', 'layout');
     }
 
     public function update($id, $request)
@@ -66,20 +77,24 @@ class PostsController extends BaseController
         ];
 
         if($this->post->update($data, $id)){
-            Redirect::route('/posts', [
+            return Redirect::route('/posts', [
                 'success' => ['Post atualizado com sucesso!']
             ]);
         }else{
-            echo "Erro ao atualizar!";
+            return Redirect::route('/posts', [
+                'errors' => ['Erro ao atualzar!']
+            ]);
         }
     }
 
     public function delete($id)
     {
         if($this->post->delete($id)){
-            Redirect::route('/posts');
+            return Redirect::route('/posts');
         }else{
-            echo "Erro ao excluir!";
+            return Redirect::route('/posts', [
+                'errors' => ['Erro ao excluir!']
+            ]);
         }
     }
 

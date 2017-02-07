@@ -1,10 +1,13 @@
 <div class="container">
     <h1 class="h1">
-        <?php $this->getPageTitle(); ?>
+        <?php echo $this->getPageTitle(); ?>
         <a href="/post/create" class="btn btn-primary pull-right">
             <i class="glyphicon glyphicon-plus-sign"></i> New post
         </a>
     </h1>
+
+    <?php $this->renderView('alerts/_success') ?>
+    <?php $this->renderView('alerts/_errors') ?>
 
     <?php foreach ($this->view->posts as $post): ?>
         <h3 class="h3">
