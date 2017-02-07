@@ -66,7 +66,9 @@ class PostsController extends BaseController
         ];
 
         if($this->post->update($data, $id)){
-            Redirect::route('/posts');
+            Redirect::route('/posts', [
+                'success' => ['Post atualizado com sucesso!']
+            ]);
         }else{
             echo "Erro ao atualizar!";
         }
