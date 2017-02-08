@@ -1,9 +1,9 @@
-<?php if ($this->view->success): ?>
+<?php if ($this->success): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <?php foreach ($this->view->success as $msg): ?>
+        <?php foreach ($this->success as $msg): ?>
         <p><i class="glyphicon glyphicon-ok-sign"></i> <?php echo $msg; ?></p>
         <?php endforeach; ?>
     </div>

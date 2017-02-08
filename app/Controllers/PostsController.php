@@ -21,14 +21,6 @@ class PostsController extends BaseController
 
     public function index()
     {
-        if(Session::get('success')){
-            $this->view->success = Session::get('success');
-            Session::destroy('success');
-        }
-        if(Session::get('errors')){
-            $this->view->errors = Session::get('errors');
-            Session::destroy('errors');
-        }
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->All();
         return $this->renderView('posts/index', 'layout');
@@ -43,14 +35,6 @@ class PostsController extends BaseController
 
     public function create()
     {
-        if(Session::get('errors')){
-            $this->view->errors = Session::get('errors');
-            Session::destroy('errors');
-        }
-        if(Session::get('inputs')){
-            $this->view->inputs = Session::get('inputs');
-            Session::destroy('inputs');
-        }
         $this->setPageTitle('New post');
         return $this->renderView('posts/create', 'layout');
     }
@@ -77,14 +61,6 @@ class PostsController extends BaseController
 
     public function edit($id)
     {
-        if(Session::get('errors')){
-            $this->view->errors = Session::get('errors');
-            Session::destroy('errors');
-        }
-        if(Session::get('inputs')){
-            $this->view->inputs = Session::get('inputs');
-            Session::destroy('inputs');
-        }
         $this->view->post = $this->post->find($id);
         $this->setPageTitle('Edit post - ' . $this->view->post->title);
         return $this->renderView('posts/edit', 'layout');
