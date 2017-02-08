@@ -7,6 +7,7 @@ use Core\BaseController;
 use Core\Container;
 use Core\Redirect;
 use Core\Session;
+use Core\Validator;
 
 class PostsController extends BaseController
 {
@@ -42,6 +43,14 @@ class PostsController extends BaseController
 
     public function create()
     {
+        if(Session::get('errors')){
+            $this->view->errors = Session::get('errors');
+            Session::destroy('errors');
+        }
+        if(Session::get('inputs')){
+            $this->view->inputs = Session::get('inputs');
+            Session::destroy('inputs');
+        }
         $this->setPageTitle('New post');
         return $this->renderView('posts/create', 'layout');
     }
@@ -52,6 +61,10 @@ class PostsController extends BaseController
             'title' => $request->post->title,
             'content' => $request->post->content
         ];
+
+        if (Validator::make($data, $this->post->rules())) {
+            return Redirect::route("/post/create");
+        }
 
         if($this->post->create($data)){
             return Redirect::route('/posts');
@@ -64,6 +77,14 @@ class PostsController extends BaseController
 
     public function edit($id)
     {
+        if(Session::get('errors')){
+            $this->view->errors = Session::get('errors');
+            Session::destroy('errors');
+        }
+        if(Session::get('inputs')){
+            $this->view->inputs = Session::get('inputs');
+            Session::destroy('inputs');
+        }
         $this->view->post = $this->post->find($id);
         $this->setPageTitle('Edit post - ' . $this->view->post->title);
         return $this->renderView('posts/edit', 'layout');
@@ -75,6 +96,10 @@ class PostsController extends BaseController
             'title' => $request->post->title,
             'content' => $request->post->content
         ];
+
+        if(Validator::make($data, $this->post->rules())){
+            return Redirect::route("/post/{$id}/edit");
+        }
 
         if($this->post->update($data, $id)){
             return Redirect::route('/posts', [

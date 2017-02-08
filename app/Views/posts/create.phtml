@@ -3,14 +3,23 @@
     <h1 class="h1"><?php echo $this->getPageTitle() ?></h1>
 
     <form action="/post/store" method="post" accept-charset="utf-8">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" name="title" class="form-control">
+
+        <div class="form-group <?php echo ($this->view->errors['title']) ? 'has-error' : '' ?>">
+            <label for="title" class="control-label">Title</label>
+            <input type="text" name="title" class="form-control" value="<?php echo (isset($this->view->inputs['title'])) ? $this->view->inputs['title'] : '' ?>">
+            <?php if($this->view->errors['title']): ?>
+                <span class="help-block"><?php echo $this->view->errors['title'] ?></span>
+            <?php endif; ?>
         </div>
-        <div class="form-group">
+
+        <div class="form-group <?php echo ($this->view->errors['content']) ? 'has-error' : '' ?>">
             <label for="title">Content</label>
-            <textarea name="content" class="form-control" rows="10"></textarea>
+            <textarea name="content" class="form-control" rows="10"><?php echo (isset($this->view->inputs['content'])) ? $this->view->inputs['content'] : '' ?></textarea>
+            <?php if($this->view->errors['content']): ?>
+                <span class="help-block"><?php echo $this->view->errors['content'] ?></span>
+            <?php endif; ?>
         </div>
+
         <a href="/posts" class="btn btn-default">Cancel</a>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
