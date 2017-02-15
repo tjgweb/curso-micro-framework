@@ -13,7 +13,7 @@ class DataBase
 
         if($conf['driver'] == 'sqlite'){
 
-            $sqlite = __DIR__ . "/../storage/database/" . $conf['sqlite']['host'];
+            $sqlite = __DIR__ . "/../storage/database/" . $conf['sqlite']['database'];
             $sqlite = "sqlite:" . $sqlite;
 
             try{

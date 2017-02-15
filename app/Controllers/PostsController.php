@@ -3,10 +3,9 @@
 namespace App\Controllers;
 
 
+use App\Models\Post;
 use Core\BaseController;
-use Core\Container;
 use Core\Redirect;
-use Core\Session;
 use Core\Validator;
 
 class PostsController extends BaseController
@@ -16,7 +15,7 @@ class PostsController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->post = Container::getModel("Post");
+        $this->post = new Post;
     }
 
     public function index()
@@ -50,13 +49,24 @@ class PostsController extends BaseController
             return Redirect::route("/post/create");
         }
 
-        if($this->post->create($data)){
+        try{
+            $this->post->create($data);
+            return Redirect::route('/posts', [
+                'success' => ['Post criado com sucesso!']
+            ]);
+        }catch(\Exception $e){
+            return Redirect::route('/posts', [
+                'errors' => [$e->getMessage()]
+            ]);
+        }
+
+        /*if($this->post->create($data)){
             return Redirect::route('/posts');
         }else{
             return Redirect::route('/posts', [
                 'errors' => ['Erro ao inserir no banco de dados!']
             ]);
-        }
+        }*/
     }
 
     public function edit($id)
@@ -77,7 +87,18 @@ class PostsController extends BaseController
             return Redirect::route("/post/{$id}/edit");
         }
 
-        if($this->post->update($data, $id)){
+        try{
+            $this->post->find($id)->update($data);
+            return Redirect::route('/posts', [
+                'success' => ['Post atualizado com sucesso!']
+            ]);
+        }catch(\Exception $e){
+            return Redirect::route('/posts', [
+                'errors' => [$e->getMessage()]
+            ]);
+        }
+
+        /*if($this->post->update($data, $id)){
             return Redirect::route('/posts', [
                 'success' => ['Post atualizado com sucesso!']
             ]);
@@ -85,18 +106,29 @@ class PostsController extends BaseController
             return Redirect::route('/posts', [
                 'errors' => ['Erro ao atualzar!']
             ]);
-        }
+        }*/
     }
 
     public function delete($id)
     {
-        if($this->post->delete($id)){
+        try{
+            $this->post->find($id)->delete();
+            return Redirect::route('/posts', [
+                'success' => ['Post excluído com sucesso!']
+            ]);
+        }catch(\Exception $e){
+            return Redirect::route('/posts', [
+                'errors' => [$e->getMessage()]
+            ]);
+        }
+
+        /*if($this->post->delete($id)){
             return Redirect::route('/posts');
         }else{
             return Redirect::route('/posts', [
                 'errors' => ['Erro ao excluir!']
             ]);
-        }
+        }*/
     }
 
 }

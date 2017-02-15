@@ -3,6 +3,10 @@
         <h2 class="h2 col-xs-12"><?php $this->getPageTitle(); ?></h2>
     </div>
     <div class="row">
+        <?php $this->renderView('alerts/_success') ?>
+        <?php $this->renderView('alerts/_errors') ?>
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-xs-offset-0 col-md-8 col-md-offset-2">
             <h1 class="h1 text-center">TJG Micro Framework</h1>
             <p>

@@ -2,13 +2,14 @@
 
 return [
 
-    /**
-     * Options (mysql, sqlite)
-     */
+    /* Options (core, illuminate) */
+    'baseModel' => 'illuminate',
+
+    /* Options (mysql, sqlite) */
     'driver' => 'sqlite',
 
     'sqlite' => [
-        'host' => 'database.db'
+        'database' => 'database.db'
     ],
 
     'mysql' => [
