@@ -6,6 +6,7 @@ namespace Core;
 abstract class BaseController
 {
     protected $view;
+    protected $auth;
     protected $errors;
     protected $inputs;
     protected $success;
@@ -16,6 +17,7 @@ abstract class BaseController
     public function __construct()
     {
         $this->view = new \stdClass;
+        $this->auth = new Auth;
         if (Session::get('errors')) {
             $this->errors = Session::get('errors');
             Session::destroy('errors');

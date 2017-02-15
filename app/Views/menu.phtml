@@ -20,6 +20,21 @@
                 <li><a href="/posts">Blog</a></li>
 
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <?php if($this->auth->check()) : ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                           <i class="glyphicon glyphicon-user"></i> <?php echo $this->auth->name() ?> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                <?php else : ?>
+                    <li><a href="/login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+                    <li><a href="/user/create"><i class="glyphicon glyphicon-pencil"></i> Register</a></li>
+                <?php endif; ?>
+            </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
