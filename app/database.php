@@ -2,9 +2,6 @@
 
 return [
 
-    /* Options (core, illuminate) */
-    'baseModel' => 'illuminate',
-
     /* Options (mysql, sqlite) */
     'driver' => 'sqlite',
 

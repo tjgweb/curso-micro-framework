@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Core\BaseModelEloquent;
 
-class Post extends Model
+class Post extends BaseModelEloquent
 {
     public $table = "posts";
 

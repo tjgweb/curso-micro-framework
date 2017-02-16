@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Core\BaseModelEloquent;
 
-class User extends Model
+class User extends BaseModelEloquent
 {
     public $table = "users";
 
