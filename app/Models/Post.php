@@ -10,7 +10,7 @@ class Post extends BaseModelEloquent
 
     public $timestamps = false;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['user_id', 'title', 'content'];
 
     public function rules()
     {
@@ -18,5 +18,15 @@ class Post extends BaseModelEloquent
             'title' => 'min:5|max:255',
             'content' => 'min:10'
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }

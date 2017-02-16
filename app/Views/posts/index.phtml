@@ -1,9 +1,11 @@
 <div class="container">
     <h1 class="h1">
         <?php echo $this->getPageTitle(); ?>
+        <?php if($this->auth->check()) : ?>
         <a href="/post/create" class="btn btn-primary pull-right">
             <i class="glyphicon glyphicon-plus-sign"></i> New post
         </a>
+        <?php endif; ?>
     </h1>
 
     <?php $this->renderView('alerts/_success') ?>
@@ -14,13 +16,24 @@
             <a href="/post/<?php echo $post->id; ?>/show"><?php echo $post->title; ?></a>
         </h3>
         <p class="text-justify"><?php echo $post->content; ?></p>
-        <p class="text-right">
-            <a href="/post/<?php echo $post->id ?>/edit" class="btn btn-warning btn-xs">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </a>
-            <a href="/post/<?php echo $post->id ?>/delete" class="btn btn-danger btn-xs" onclick="return confirm('Deletar este post?')">
-                <i class="glyphicon glyphicon-trash"></i>
-            </a>
+        <p>
+            <strong>Autor: </strong><?php echo $post->user->name; ?><br/>
+            <strong>Categorias: </strong>
+            <?php foreach ($post->category as $cat){
+                echo $cat->name . " ";
+            } ?>
+
+            <?php if($this->auth->check() && $post->user->id == $this->auth->id()) : ?>
+            <span class="pull-right">
+                <a href="/post/<?php echo $post->id ?>/edit" class="btn btn-warning btn-xs">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a href="/post/<?php echo $post->id ?>/delete" class="btn btn-danger btn-xs"
+                   onclick="return confirm('Deletar este post?')">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+            </span>
+            <?php endif; ?>
         </p>
         <hr/>
     <?php endforeach; ?>

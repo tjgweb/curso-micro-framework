@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $conf = require_once __DIR__ . "/../app/database.php";

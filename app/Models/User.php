@@ -30,4 +30,9 @@ class User extends BaseModelEloquent
         ];
     }
 
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

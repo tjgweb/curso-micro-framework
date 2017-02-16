@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 
+use App\Models\Category;
 use App\Models\Post;
+use Core\Auth;
 use Core\BaseController;
 use Core\Redirect;
 use Core\Validator;
@@ -35,12 +37,14 @@ class PostsController extends BaseController
     public function create()
     {
         $this->setPageTitle('New post');
+        $this->view->categories = Category::all();
         return $this->renderView('posts/create', 'layout');
     }
 
     public function store($request)
     {
         $data = [
+            'user_id' => Auth::id(),
             'title' => $request->post->title,
             'content' => $request->post->content
         ];
@@ -50,7 +54,10 @@ class PostsController extends BaseController
         }
 
         try{
-            $this->post->create($data);
+            $post = $this->post->create($data);
+            if(isset($request->post->category_id)){
+                $post->category()->attach($request->post->category_id);
+            }
             return Redirect::route('/posts', [
                 'success' => ['Post criado com sucesso!']
             ]);
@@ -72,6 +79,12 @@ class PostsController extends BaseController
     public function edit($id)
     {
         $this->view->post = $this->post->find($id);
+        $this->view->categories = Category::all();
+        if(Auth::id() != $this->view->post->id){
+            return Redirect::route('/posts', [
+                'errors' => ['Você não pode editar post de outro autor.']
+            ]);
+        }
         $this->setPageTitle('Edit post - ' . $this->view->post->title);
         return $this->renderView('posts/edit', 'layout');
     }
@@ -88,7 +101,13 @@ class PostsController extends BaseController
         }
 
         try{
-            $this->post->find($id)->update($data);
+            $post = $this->post->find($id);
+            $post->update($data);
+            if(isset($request->post->category_id)){
+                $post->category()->sync($request->post->category_id);
+            }else{
+                $post->category()->detach();
+            }
             return Redirect::route('/posts', [
                 'success' => ['Post atualizado com sucesso!']
             ]);
@@ -112,7 +131,13 @@ class PostsController extends BaseController
     public function delete($id)
     {
         try{
-            $this->post->find($id)->delete();
+            $post = $this->post->find($id);
+            if(Auth::id() != $post->user->id){
+                return Redirect::route('/posts', [
+                    'errors' => ['Você não pode excluir post de outro autor.']
+                ]);
+            }
+            $post->delete();
             return Redirect::route('/posts', [
                 'success' => ['Post excluído com sucesso!']
             ]);

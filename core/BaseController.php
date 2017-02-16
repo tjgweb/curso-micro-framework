@@ -2,7 +2,6 @@
 
 namespace Core;
 
-
 abstract class BaseController
 {
     protected $view;
