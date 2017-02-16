@@ -74,4 +74,9 @@ abstract class BaseController
             return $this->pageTitle;
         }
     }
+
+    public function forbiden()
+    {
+        return Redirect::route('/login');
+    }
 }
