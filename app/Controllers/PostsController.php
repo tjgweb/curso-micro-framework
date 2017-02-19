@@ -80,7 +80,7 @@ class PostsController extends BaseController
     {
         $this->view->post = $this->post->find($id);
         $this->view->categories = Category::all();
-        if(Auth::id() != $this->view->post->id){
+        if(Auth::id() != $this->view->post->user->id){
             return Redirect::route('/posts', [
                 'errors' => ['Você não pode editar post de outro autor.']
             ]);

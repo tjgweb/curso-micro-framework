@@ -74,7 +74,7 @@ class Route
             }
         }
 
-        if($found){
+        if(isset($found)){
             $controller = Container::newController($controller);
             switch (count($param)){
                 case 1:
