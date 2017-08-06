@@ -31,11 +31,11 @@ class Route
         $obj = new \stdClass;
 
         foreach ($_GET as $key => $value){
-            $obj->get->$key = $value;
+            @$obj->get->$key = $value;
         }
 
         foreach ($_POST as $key => $value){
-            $obj->post->$key = $value;
+            @$obj->post->$key = $value;
         }
 
         return $obj;
