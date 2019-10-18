@@ -29,6 +29,9 @@ class Route
     private function getRequest()
     {
         $obj = new \stdClass;
+        $obj->get = new \stdClass;
+        $obj->post = new \stdClass;
+        
 
         foreach ($_GET as $key => $value){
             @$obj->get->$key = $value;
